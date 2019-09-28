@@ -23,6 +23,11 @@ RSpec.describe GramsController, type: :controller do
 			gram = Gram.last
 			expect(gram.message).to eq("Hello!")
 		end
+
+		it "should properly deal with validation errors" do 
+			post :create, params: { gram: { message: '' } }
+			expect(response).to have_http_status(:unprocessable_entity)
+		end
 	end
 
 end
