@@ -19,7 +19,7 @@ before_action :authenticate_user!, only: [:new, :create]
 
 	def show
 		@gram = Gram.find_by_id(params[:id])
-			return render_not_found if @gram.blank?
+		return render_not_found if @gram.blank?
 	end
 
 	def edit
@@ -37,6 +37,16 @@ before_action :authenticate_user!, only: [:new, :create]
 			redirect_to root_path
 		else
 			return render :edit, status: :unprocessable_entity
+		end
+	end
+
+	def destroy
+		@gram = Gram.find_by_id(params[:id])
+		return render_not_found if @gram.blank?
+		@gram.destroy
+
+		if @gram.valid?
+			redirect_to root_path
 		end
 	end
 
