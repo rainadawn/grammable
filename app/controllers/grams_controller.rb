@@ -17,6 +17,10 @@ before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destro
 		end
 	end
 
+	def index
+		@grams = Gram.all 
+	end
+	
 	def show
 		@gram = Gram.find_by_id(params[:id])
 		return render_not_found(:not_found) if @gram.blank?
@@ -51,7 +55,7 @@ before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destro
 	private
 
 	def gram_params
-		params.require(:gram).permit(:message)
+		params.require(:gram).permit(:message, :picture)
 	end
 
 	def render_not_found(status=not_found)
