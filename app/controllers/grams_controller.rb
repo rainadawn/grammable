@@ -1,13 +1,14 @@
 class GramsController < ApplicationController
 before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 
-	def index 
-	end
-
 	def new
 		@gram = Gram.new
 	end
 	
+	def index
+		@grams = Gram.all 
+	end
+
 	def create
 		@gram = current_user.grams.create(gram_params)
 		if @gram.valid?
@@ -15,10 +16,6 @@ before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destro
 		else
 			render :new, status: :unprocessable_entity
 		end
-	end
-
-	def index
-		@grams = Gram.all 
 	end
 	
 	def show
